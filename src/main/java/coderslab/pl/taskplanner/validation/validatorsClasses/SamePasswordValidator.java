@@ -7,6 +7,10 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class SamePasswordValidator implements ConstraintValidator<SamePassword,NewUserDTO> {
+
+    private final String MESSAGE="SamePassword.newUserDTO.rePassword";
+    private final String FIELD="rePassword";
+
     @Override
     public void initialize(SamePassword constraintAnnotation) {
 
@@ -17,8 +21,8 @@ public class SamePasswordValidator implements ConstraintValidator<SamePassword,N
         boolean valid=newUserDTO.getPassword().equals(newUserDTO.getRePassword());
         if (!valid){
             constraintValidatorContext.disableDefaultConstraintViolation();
-            constraintValidatorContext.buildConstraintViolationWithTemplate("samePassword")
-                    .addPropertyNode("password").addConstraintViolation();
+            constraintValidatorContext.buildConstraintViolationWithTemplate(MESSAGE)
+                    .addPropertyNode(FIELD).addConstraintViolation();
         }
         return valid;
     }

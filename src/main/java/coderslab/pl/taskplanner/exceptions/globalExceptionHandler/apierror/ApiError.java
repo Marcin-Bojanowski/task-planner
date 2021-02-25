@@ -4,8 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.engine.path.PathImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 
 import javax.validation.ConstraintViolation;
@@ -15,7 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@Slf4j
+@Component
+@Configurable(preConstruction = true)
+
 public class ApiError {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
@@ -23,33 +32,16 @@ public class ApiError {
     private String message;
     private List<ApiSubError> subErrors;
 
-    private void addSubError(ApiSubError subError){
-        if (subErrors==null){
-            subErrors=new ArrayList<>();
+
+    public void addSubError(ApiSubError subError) {
+        if (subErrors == null) {
+            subErrors = new ArrayList<>();
         }
         subErrors.add(subError);
     }
 
-    private void addValidationError(String object,String field, Object rejectValue, String message){
-        addSubError(new ApiValidationError(object,field,rejectValue,message));
-    }
 
-    public void addValidationError(ConstraintViolation<?> ex){
-        this.addValidationError(
-                ex.getRootBeanClass().getSimpleName(),
-                ((PathImpl) ex.getPropertyPath()).getLeafNode().asString(),
-                ex.getInvalidValue(),
-                ex.getMessage()
-        );
-    }
 
-    public void addValidationError(FieldError error){
-        this.addValidationError(
-                error.getObjectName(),
-                error.getField(),
-                error.getRejectedValue(),
-                error.getDefaultMessage()
-        );
-    }
+
 
 }

@@ -4,7 +4,9 @@ import coderslab.pl.taskplanner.validation.groups.BusinessLogic;
 import coderslab.pl.taskplanner.validation.validators.Password;
 import coderslab.pl.taskplanner.validation.validators.SamePassword;
 import coderslab.pl.taskplanner.validation.validators.UniqueEmail;
+import coderslab.pl.taskplanner.validation.validators.UniqueLogin;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 public class NewUserDTO {
 
     @NotBlank
+    @UniqueLogin(groups = BusinessLogic.class)
     private String login;
     @NotBlank
     @Email

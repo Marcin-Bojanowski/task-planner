@@ -33,24 +33,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity saveUser(@Valid @RequestBody NewUserDTO newUserDTO) {
-//        if (result.hasErrors()){
-//            log.info(result.toString());
-//        }
-//        User user=userService.findByEmail(newUserDTO.getEmail());
-//        if (user!=null){
-//         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,EMAIL_ALREADY_EXISTS_MSG);
-//        }
-//        try {
-            userService.saveUser(newUserDTO);
-//        } catch (ConstraintViolationException ex) {
-//
-//            Set<ConstraintViolation<?>> violations=ex.getConstraintViolations();
-//
-//            for (ConstraintViolation<?> violation:violations){
-//             result.addError();
-//            }
-//            return ResponseEntity.badRequest().body(violations);
-//        }
+        userService.saveUser(newUserDTO);
         return ResponseEntity.created(URI.create("/api/login")).build();
     }
 }

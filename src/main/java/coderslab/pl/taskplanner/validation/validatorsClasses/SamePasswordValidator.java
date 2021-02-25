@@ -2,10 +2,11 @@ package coderslab.pl.taskplanner.validation.validatorsClasses;
 
 import coderslab.pl.taskplanner.dtos.user.NewUserDTO;
 import coderslab.pl.taskplanner.validation.validators.SamePassword;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
+@Slf4j
 public class SamePasswordValidator implements ConstraintValidator<SamePassword,NewUserDTO> {
 
     private final String MESSAGE="SamePassword.newUserDTO.rePassword";

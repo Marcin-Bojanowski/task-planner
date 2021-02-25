@@ -29,6 +29,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public User findByLogin(String login){
+        return userRepository.findByLogin(login);
+    }
+
     @Validated({BusinessLogic.class})
     public void saveUser(@Valid NewUserDTO newUserDTO) {
         User user = new User();

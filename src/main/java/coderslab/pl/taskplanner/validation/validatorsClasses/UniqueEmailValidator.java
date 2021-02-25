@@ -23,12 +23,6 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
         User user = userService.findByEmail(email);
-//        if (user != null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"dddupa");
-////            constraintValidatorContext.disableDefaultConstraintViolation();
-////            constraintValidatorContext.buildConstraintViolationWithTemplate("dupa")
-////                    .addPropertyNode("email").addConstraintViolation();
-//        }
         return user==null;
     }
 }
